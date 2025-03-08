@@ -1,0 +1,107 @@
+/*
+ * File: p2_e1a.h
+ * Author: Izan Robles
+ */
+
+#include "utils.h"
+
+int main(void)
+{
+    FILE *file = NULL;
+    int error_manager = 0;
+    Stack *sin1 = NULL;
+    Stack *sin2 = NULL;
+    Stack *sout = NULL;
+    P_stack_ele_print print_func = (P_stack_ele_print)fprintf;
+
+    /*Read first file and create stack*/
+    if (!(file = fopen("g1.txt", "r")))
+    {
+        printf("Could not open first file\n");
+        return 1;
+    }
+
+    sin1 = stack_read_from_file(file);
+    if (!sin1)
+    {
+        printf("Could not read information (g1)\n");
+        fclose(file);
+        return 1;
+    }
+
+    fclose(file);
+
+    /*Read second file and create stack*/
+    if (!(file = fopen("g2.txt", "r")))
+    {
+        printf("Could not open second file\n");
+        stack_free(sin1);
+        return 1;
+    }
+
+    sin2 = stack_read_from_file(file);
+    if (!sin2)
+    {
+        printf("Could not read information (g2)\n");
+        fclose(file);
+        stack_free(sin1);
+        return 1;
+    }
+
+    fclose(file);
+
+    /*Create new stack and merge*/
+    sout = stack_init();
+    if (!sout)
+    {
+        printf("Could not create output stack\n");
+        stack_free(sin1);
+        stack_free(sin2);
+        return 1;
+    }
+
+    if (mergeStacks(sin1, sin2, sout) == ERROR)
+    {
+        printf("Could not merge stacks\n");
+        stack_free(sin1);
+        stack_free(sin2);
+        stack_free(sout);
+        return 1;
+    }
+
+    /*Prints all rankings*/
+    printf("Ranking 0:\n");
+    if ((error_manager = stack_print(stdout, sin1, print_func)) < 0)
+    {
+        printf("Could not print first ranking\n");
+        stack_free(sin1);
+        stack_free(sin2);
+        stack_free(sout);
+        return 1;
+    }
+
+    printf("\nRanking 1:\n");
+    if ((error_manager = stack_print(stdout, sin2, print_func)) < 0)
+    {
+        printf("Could not print second ranking\n");
+        stack_free(sin1);
+        stack_free(sin2);
+        stack_free(sout);
+        return 1;
+    }
+
+    printf("\nJoint Ranking:\n");
+    if ((error_manager = stack_print(stdout, sout, print_func)) < 0)
+    {
+        printf("Could not print joint ranking\n");
+        stack_free(sin1);
+        stack_free(sin2);
+        stack_free(sout);
+        return 1;
+    }
+
+    stack_free(sin1);
+    stack_free(sin2);
+    stack_free(sout);
+    return 0;
+}
