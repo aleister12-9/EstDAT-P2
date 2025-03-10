@@ -28,7 +28,6 @@ Stack *stack_read_from_file(FILE *file);
  * @brief Merges to ordered stacks into a new ordered stack.
  * 
  * @author Izan Robles
- * @author Arturo Pérez
  *
  * @param sin1 A pointer to the first stack
  * @param sin2 A pointer to the second stack

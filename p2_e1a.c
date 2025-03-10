@@ -15,7 +15,7 @@ int main(void)
     P_stack_ele_print print_func = (P_stack_ele_print)fprintf;
 
     /*Read first file and create stack*/
-    if (!(file = fopen("g1.txt", "r")))
+    if (!(file = fopen("grades1.txt", "r")))
     {
         printf("Could not open first file\n");
         return 1;
@@ -24,7 +24,7 @@ int main(void)
     sin1 = stack_read_from_file(file);
     if (!sin1)
     {
-        printf("Could not read information (g1)\n");
+        printf("Could not read information (grades1)\n");
         fclose(file);
         return 1;
     }
@@ -32,7 +32,7 @@ int main(void)
     fclose(file);
 
     /*Read second file and create stack*/
-    if (!(file = fopen("g2.txt", "r")))
+    if (!(file = fopen("grades2.txt", "r")))
     {
         printf("Could not open second file\n");
         stack_free(sin1);
@@ -42,7 +42,7 @@ int main(void)
     sin2 = stack_read_from_file(file);
     if (!sin2)
     {
-        printf("Could not read information (g2)\n");
+        printf("Could not read information (grades2)\n");
         fclose(file);
         stack_free(sin1);
         return 1;
