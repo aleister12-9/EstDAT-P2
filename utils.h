@@ -34,7 +34,18 @@ Stack *stack_read_from_file(FILE *file);
  * @param sout A pointer to the output stack
  * 
  * @return This function returns OK if the merge was successful, otherwise ERROR.
+ * 
  **/
 Status mergeStacks (Stack *sin1, Stack *sin2, Stack *sout);
+
+/**
+ * @brief Frees a stack and its elements
+ * 
+ * @author Izan Robles
+ * 
+ * @param s A pointer to the stack to be freed
+ * 
+ **/
+void stack_free_with_elements(Stack *s);
 
 #endif

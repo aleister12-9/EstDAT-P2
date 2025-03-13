@@ -37,7 +37,7 @@ int main(void)
     if ((error_manager = stack_print(stdout, sin1, print_func)) < 0)
     {
         printf("Could not print first ranking\n");
-        stack_free(sin1);
+        stack_free_with_elements(sin1);
         return 1;
     }
 
@@ -45,7 +45,7 @@ int main(void)
     if (!(file = fopen("grades2.txt", "r")))
     {
         printf("Could not open second file\n");
-        stack_free(sin1);
+        stack_free_with_elements(sin1);
         return 1;
     }
 
@@ -54,7 +54,7 @@ int main(void)
     {
         printf("Could not read information (grades2)\n");
         fclose(file);
-        stack_free(sin1);
+        stack_free_with_elements(sin1);
         return 1;
     }
 
@@ -65,8 +65,8 @@ int main(void)
     if ((error_manager = stack_print(stdout, sin2, print_func)) < 0)
     {
         printf("Could not print second ranking\n");
-        stack_free(sin1);
-        stack_free(sin2);
+        stack_free_with_elements(sin1);
+        stack_free_with_elements(sin2);
         return 1;
     }
 
@@ -75,17 +75,17 @@ int main(void)
     if (!sout)
     {
         printf("Could not create output stack\n");
-        stack_free(sin1);
-        stack_free(sin2);
+        stack_free_with_elements(sin1);
+        stack_free_with_elements(sin2);
         return 1;
     }
 
     if (mergeStacks(sin1, sin2, sout) == ERROR)
     {
         printf("Could not merge stacks\n");
-        stack_free(sin1);
-        stack_free(sin2);
-        stack_free(sout);
+        stack_free_with_elements(sin1);
+        stack_free_with_elements(sin2);
+        stack_free_with_elements(sout);
         return 1;
     }
 
@@ -94,14 +94,14 @@ int main(void)
     if ((error_manager = stack_print(stdout, sout, print_func)) < 0)
     {
         printf("Could not print joint ranking\n");
-        stack_free(sin1);
-        stack_free(sin2);
-        stack_free(sout);
+        stack_free_with_elements(sin1);
+        stack_free_with_elements(sin2);
+        stack_free_with_elements(sout);
         return 1;
     }
 
-    stack_free(sin1);
-    stack_free(sin2);
-    stack_free(sout);
+    stack_free_with_elements(sin1);
+    stack_free_with_elements(sin2);
+    stack_free_with_elements(sout);
     return 0;
 }
