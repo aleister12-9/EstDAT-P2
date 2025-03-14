@@ -11,6 +11,7 @@
 #include <stdio.h>
 #include "stack.h"
 #include "types.h"
+#include "vertex.h"
 
 /**
  * @brief Reads data from a document and adds it to new stack
@@ -47,5 +48,17 @@ Status mergeStacks (Stack *sin1, Stack *sin2, Stack *sout, P_stack_ele_cmp cmp_f
  * 
  **/
 void stack_free_with_elements(Stack *s);
+
+/**
+ * @brief Reads data from a document and adds it to a stack of vertex
+ * 
+ * @author Izan Robles
+ * 
+ * @param file pointer to the file from which data will be read
+ * 
+ * @return Returns a pointer to a new stack containing the read information or NULL if an error occurs. 
+ * 
+ **/
+Stack *stack_of_vertex_from_file(FILE *file);
 
 #endif

@@ -3,8 +3,8 @@ CC=gcc
 CFLAGS= -g -Wall -ansi -pedantic
 EJS = p2_e1a p2_e1b
 ########################################################
-OBJECTSP2E1A = p2_e1a.o utils.o file_utils.o
-OBJECTSP2E1B = p2_e1b.o utils.o file_utils.o vertex.o graph.o
+OBJECTSP2E1A = p2_e1a.o utils.o file_utils.o vertex.o
+OBJECTSP2E1B = p2_e1b.o utils.o file_utils.o vertex.o
 ########################################################
 
 all: $(EJS) clear
@@ -18,7 +18,7 @@ p2_e1b: $(OBJECTSP2E1B)
 p2_e1b.o: p2_e1b.c utils.h stack.h types.h vertex.h
 	$(CC) $(CFLAGS) -c p2_e1b.c
 
-p2_e1a.o: p2_e1a.c utils.h stack.h types.h
+p2_e1a.o: p2_e1a.c utils.h stack.h types.h vertex.h
 	$(CC) $(CFLAGS) -c p2_e1a.c
 
 utils.o: utils.c utils.h stack.h types.h
@@ -29,9 +29,6 @@ file_utils.o: file_utils.c file_utils.h types.h
 
 vertex.o: vertex.c vertex.h types.h
 	$(CC) $(CFLAGS) -c vertex.c
-
-graph.o: graph.c graph.h types.h
-	$(CC) $(CFLAGS) -c graph.c
 
 clear:
 	rm -rf *.o 
