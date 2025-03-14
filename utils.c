@@ -72,12 +72,12 @@ Stack *stack_read_from_file(FILE *file)
 
 /* ------------------------------------------------------------- */
 
-Status mergeStacks (Stack *sin1, Stack *sin2, Stack *sout)
+Status mergeStacks (Stack *sin1, Stack *sin2, Stack *sout, P_stack_ele_cmp cmp_func)
 {
     void *temp = NULL;
     float *val1, *val2;
     
-    if (!sin1 || !sin2 || !sout)
+    if (!sin1 || !sin2 || !sout || !cmp_func)
     {
         return ERROR;
     }
@@ -87,7 +87,7 @@ Status mergeStacks (Stack *sin1, Stack *sin2, Stack *sout)
         val1 = (float *)stack_top(sin1);
         val2 = (float *)stack_top(sin2);
 
-        if (*val1 >= *val2)
+        if (cmp_func((const void*)val1, (const void*)val2) >= 0)
         {
             temp = stack_pop(sin1);
             if (stack_push(sout, temp) == ERROR)

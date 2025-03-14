@@ -37,7 +37,7 @@ float *float_init(float a);
 void *float_copy(const void *a);
 int float_cmp(const void *c1, const void *c2);
 void float_free(void *a);
-int float_print(FILE *pf, const void *a);
+int _float_print(FILE *pf, const void *a);
 /* functions to manage pointer to string (noy very interesting) */
 void *string_copy(const void *src);
 int string_cmp(const void *c1, const void *c2);

@@ -2,7 +2,7 @@
 
 /* ------------------------------------------------------------- */
 
-int float_print(FILE *pf, const void *a)
+int _float_print(FILE *pf, const void *a)
 {
     if (!pf || !a)
         return -1;

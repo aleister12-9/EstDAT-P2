@@ -1,5 +1,5 @@
 /*
- * File: p2_e1a.h
+ * File: p2_e1a.c
  * Author: Izan Robles
  */
 
@@ -13,7 +13,7 @@ int main(void)
     Stack *sin1 = NULL;
     Stack *sin2 = NULL;
     Stack *sout = NULL;
-    P_stack_ele_print print_func = float_print;
+    P_stack_ele_print print_func = _float_print;
 
     /*Read first file and create stack*/
     if (!(file = fopen("grades1.txt", "r")))
@@ -80,7 +80,7 @@ int main(void)
         return 1;
     }
 
-    if (mergeStacks(sin1, sin2, sout) == ERROR)
+    if (mergeStacks(sin1, sin2, sout, float_cmp) == ERROR)
     {
         printf("Could not merge stacks\n");
         stack_free_with_elements(sin1);

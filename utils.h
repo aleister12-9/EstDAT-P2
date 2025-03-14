@@ -36,7 +36,7 @@ Stack *stack_read_from_file(FILE *file);
  * @return This function returns OK if the merge was successful, otherwise ERROR.
  * 
  **/
-Status mergeStacks (Stack *sin1, Stack *sin2, Stack *sout);
+Status mergeStacks (Stack *sin1, Stack *sin2, Stack *sout, P_stack_ele_cmp cmp_func);
 
 /**
  * @brief Frees a stack and its elements
