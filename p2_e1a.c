@@ -33,7 +33,7 @@ int main(void)
     fclose(file);
 
     /*Print first ranking*/
-    printf("\nRanking 0:\n");
+    printf("Ranking 0:\n");
     if ((error_manager = stack_print(stdout, sin1, print_func)) < 0)
     {
         printf("Could not print first ranking\n");
