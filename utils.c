@@ -149,8 +149,8 @@ Stack *stack_of_vertex_from_file(FILE *file)
     Stack *p_new_stack;
     Vertex *temp_vertex;
     char temp[MAX_DATA];
-    int n_elements = 0;
-    int i = 0;
+    int n_elements;
+    int i;
 
     if (!file)
     {
@@ -178,13 +178,15 @@ Stack *stack_of_vertex_from_file(FILE *file)
     }
 
     /*Add new elements to the stack*/
-    for (i = 0; fscanf(file, "%s\n", temp) == 1; i++)
+    for (i = 0; i < n_elements; i++)
     {
-        if (i > n_elements)
+        if (fgets(temp, MAX_DATA, file) == NULL)
         {
             stack_free_with_elements(p_new_stack);
             return NULL;
         }
+
+        temp[strcspn(temp, "\n")] = 0;
         
         temp_vertex = vertex_initFromString(temp);
         if (!temp_vertex)

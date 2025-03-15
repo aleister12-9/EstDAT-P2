@@ -42,7 +42,7 @@ run_e1a:
 
 run_e1b:
 	@echo ">>>>>>Running p2_e1b"
-	./p2_e1b
+	./p2_e1b cities1.txt cities2.txt
 
 runv_e1a:
 	@echo ">>>>>>Running p2_e1a with valgrind"
@@ -50,4 +50,4 @@ runv_e1a:
 
 runv_e1b:
 	@echo ">>>>>>Running p2_e1b with valgrind"
-	valgrind --leak-check=full ./p2_e1b
+	valgrind --leak-check=full ./p2_e1b cities1.txt cities2.txt
