@@ -73,6 +73,8 @@ Vertex *vertex_init()
 
 	v->state = WHITE;
 	v->id = 0;
+	v->index = -1;
+
 	if (TAG_LENGTH > 0)
 	{
 		v->tag[0] = '\0';
@@ -265,7 +267,7 @@ int vertex_print (FILE * pf, const void * v)
 
 	source = (const Vertex *)v;
 
-	return fprintf(pf, "[%ld, %s, %d]", source->id, source->tag, source->state);
+	return fprintf(pf, "[%ld, %s, %d, %d]", source->id, source->tag, source->state, source->index);
 }
 
 /*----------------------------------------------------------------------------------------*/
@@ -286,7 +288,36 @@ Bool is_invalid_vertex(const Vertex *v)
 		return TRUE;
 	}
 
+	if (v->index < -1)
+	{
+		return TRUE;
+	}
+	
 	return FALSE;
+}
+
+/*----------------------------------------------------------------------------------------*/
+Status vertex_set_index(Vertex *v, int index)
+{
+	if (v == NULL || index < 0)
+	{
+		return ERROR;
+	}
+
+	v->index = index;
+
+	return OK;
+}
+
+/*----------------------------------------------------------------------------------------*/
+int vertex_get_index(const Vertex *v)
+{
+	if (v == NULL)
+	{
+		return -1;
+	}
+
+	return v->index;
 }
 
 

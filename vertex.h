@@ -50,6 +50,7 @@ struct _Vertex
     long id;
     char tag[TAG_LENGTH];
     Label state;
+    int index;
 }; 
 
 /**
@@ -59,13 +60,7 @@ struct _Vertex
  * @author Arturo Pérez
  * 
  * This function allocates memory for a vertex and sets its fields to 
- * id to 0, tag to "" and state to WHITE.
- *
- * @code
- * // Example of use
- * Vertex * v;
- * v = vertex_init();
- * @endcode
+ * id to 0, tag to "", state to WHITE and index to -1.
  *
  * @return Return the initialized vertex if it was done correctly, 
  * otherwise return NULL.
@@ -269,6 +264,27 @@ int vertex_print (FILE * pf, const void * v);
  * @return  Returns TRUE if the vertex is invalid, FALSE otherwise
  */
 Bool is_invalid_vertex(const Vertex *v);
+
+/**
+ * @brief Sets the index of a given vertex
+ * 
+ * @author Izan Robles
+ * 
+ * @param v Vertex pointer
+ * @param index index of the vertex to add
+ *
+ * @return  Returns OK if everything went well, ERROR otherwise
+ */
+Status vertex_set_index(Vertex *v, int index);
+
+/**
+ * @brief Gets the index of a given vertex
+ * 
+ * @param v Vertex pointer
+ *
+ * @return  Returns the index of the vertex or -1 if an error is found
+ */
+int vertex_get_index(const Vertex *v);
 
 
 #endif /* VERTEX_H_ */

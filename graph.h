@@ -265,5 +265,4 @@ Status graph_readFromFile (FILE *fin, Graph *g);
  * @return  Returns TRUE if the vertex is invalid, FALSE otherwise
  */
 Bool is_invalid_graph (const Graph *g);
-
 #endif /* GRAPH_H */

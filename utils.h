@@ -12,6 +12,7 @@
 #include "stack.h"
 #include "types.h"
 #include "vertex.h"
+#include "graph.h"
 
 /**
  * @brief Reads data from a document and adds it to new stack
@@ -57,7 +58,7 @@ void stack_free_with_elements(Stack *s);
  * @param file pointer to the file from which data will be read
  * 
  * @return Returns a pointer to a new stack containing the read information or NULL if an error occurs. 
- * 
+ *
  **/
 Stack *stack_of_vertex_from_file(FILE *file);
 

@@ -80,6 +80,7 @@ Status graph_newVertex(Graph *g, char *desc)
     }
     
     g->vertices[g->num_vertices] = v;
+    vertex_set_index(v, g->num_vertices);
     g->num_vertices++;
 
     return OK;
@@ -386,6 +387,12 @@ Status graph_readFromFile (FILE *fin, Graph *g)
         {
             return ERROR;
         }
+
+        if (vertex_set_index(g->vertices[i], i) == ERROR)
+        {
+            return ERROR;
+        }
+        
     }
 
     while (fscanf(fin, "%d %d\n", &temp_id_orig, &temp_id_dest) == 2)
@@ -402,6 +409,8 @@ Status graph_readFromFile (FILE *fin, Graph *g)
 /*----------------------------------------------------------------------------------------*/
 Bool is_invalid_graph (const Graph *g)
 {
+    int i;
+    
     if (g == NULL)
     {
         return TRUE;
@@ -417,5 +426,14 @@ Bool is_invalid_graph (const Graph *g)
         return TRUE;
     }
 
+    for (i = 0; i < g->num_vertices; i++)
+    {
+        if (g->vertices[i] == NULL || vertex_get_index(g->vertices[i]) != i)
+        {
+            return TRUE;
+        }
+    }
+    
     return FALSE;
 }
+

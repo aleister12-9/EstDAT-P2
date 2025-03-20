@@ -205,3 +205,6 @@ Stack *stack_of_vertex_from_file(FILE *file)
 
     return p_new_stack;
 }
+
+/* ------------------------------------------------------------- */
+
