@@ -3,8 +3,8 @@ CC=gcc
 CFLAGS= -g -Wall -ansi -pedantic
 EJS = p2_e1a p2_e1b p2_e2
 ########################################################
-OBJECTSP2E1A = p2_e1a.o utils.o file_utils.o vertex.o
-OBJECTSP2E1B = p2_e1b.o utils.o file_utils.o vertex.o
+OBJECTSP2E1A = p2_e1a.o utils.o file_utils.o vertex.o graph.o
+OBJECTSP2E1B = p2_e1b.o utils.o file_utils.o vertex.o graph.o
 OBJECTSP2E2 = p2_e2.o utils.o vertex.o file_utils.o graph.o
 ########################################################
 

@@ -428,7 +428,7 @@ Bool is_invalid_graph (const Graph *g)
 
     for (i = 0; i < g->num_vertices; i++)
     {
-        if (g->vertices[i] == NULL || vertex_get_index(g->vertices[i]) != i)
+        if (g->vertices[i] == NULL || vertex_get_index(g->vertices[i]) != i || is_invalid_vertex(g->vertices[i]))
         {
             return TRUE;
         }
@@ -436,4 +436,39 @@ Bool is_invalid_graph (const Graph *g)
     
     return FALSE;
 }
+
+/*----------------------------------------------------------------------------------------*/
+Status graph_set_all_vertex_label(Graph *g, Label l)
+{
+    /*Hacer copia de seguridad del grafo por si da error*/
+    
+    int i;
+    
+    if (is_invalid_graph(g) || (l != WHITE && l != BLACK && l != ERROR_VERTEX))
+    {
+        return ERROR;
+    }
+
+    for (i = 0; i < g->num_vertices; i++)
+    {
+        if (vertex_setState(g->vertices[i], l) == ERROR)
+        {
+            return ERROR;
+        }
+    }
+    
+    return OK;
+}
+
+/*----------------------------------------------------------------------------------------*/
+Vertex **graph_get_vertex_array(Graph *g)
+{
+    if (is_invalid_graph(g))
+    {
+        return NULL;
+    }
+
+    return g->vertices;
+}
+
 

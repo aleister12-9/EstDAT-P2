@@ -3,7 +3,6 @@
  * 
  * @author Profesores Prog2
  * @author Izan Robles
- * @author Arturo Pérez
  * 
  * @date Created on February 07, 2021
  * @version 1.0
@@ -23,7 +22,6 @@ typedef struct _Graph Graph;
  * @brief Creates a new empty graph.
  * 
  * @author Izan Robles
- * @author Arturo Pérez
  *
  * Allocates memory for a new graph and initializes it to be empty 
  * (no vertices and no edges).
@@ -37,7 +35,6 @@ Graph * graph_init();
  * @brief Frees a graph.
  * 
  * @author Izan Robles
- * @author Arturo Pérez
  *
  * Frees all the memory allocated for the graph.
  *
@@ -49,7 +46,6 @@ void graph_free(Graph *g);
  * @brief Inserts a new vertex in a graph.
  *
  * @author Izan Robles
- * @author Arturo Pérez
  * 
  * Creates a vertex by calling vertex_initFromString and adds it to
  * a graph. If a vertex with the same id already exists in the graph, 
@@ -67,7 +63,6 @@ Status graph_newVertex(Graph *g, char *desc);
  * @brief Creates an edge between to vertices of a graph.
  *
  * @author Izan Robles
- * @author Arturo Pérez
  * 
  * If any of the two vertices does not exist in the graph the edge is
  * not created.
@@ -84,8 +79,7 @@ Status graph_newEdge(Graph *g, long orig, long dest);
  * @brief Checks if a graph contains a vertex.
  * 
  * @author Izan Robles
- * @author Arturo Pérez
- *
+ * 
  * @param g Pointer to the graph.
  * @param id ID of the vertex.
  *
@@ -98,7 +92,6 @@ Bool graph_contains(const Graph *g, long id);
  * @brief Returns the total number of vertices in a graph.
  * 
  * @author Izan Robles
- * @author Arturo Pérez
  *
  * @param g Pointer to the graph.
  *
@@ -111,7 +104,6 @@ int graph_getNumberOfVertices(const Graph *g);
  * @brief Returns the total number of edges  * in the graph.
  *
  * @author Izan Robles
- * @author Arturo Pérez
  * 
  * @param g Pointer to the graph.
  *
@@ -124,7 +116,6 @@ int graph_getNumberOfEdges(const Graph *g);
  * @brief Determines if there is a connection between a pair of vertices.
  *
  * @author Izan Robles
- * @author Arturo Pérez
  * 
  * @param g Pointer to the graph.
  * @param orig ID of the origin vertex.
@@ -139,7 +130,6 @@ Bool graph_connectionExists(const Graph *g, long orig, long dest);
  * @brief Gets the number of connections starting at a given vertex.
  *
  * @author Izan Robles
- * @author Arturo Pérez
  * 
  * @param g Pointer to the graph.
  * @param id ID of the origin vertex.
@@ -154,7 +144,6 @@ int graph_getNumberOfConnectionsFromId(const Graph *g, long id);
  * given vertex connects to.
  * 
  * @author Izan Robles
- * @author Arturo Pérez
  *
  * This function allocates memory for the array.
  *
@@ -170,7 +159,6 @@ long *graph_getConnectionsFromId(const Graph *g, long id);
  * @brief Gets the number of connections starting at a given vertex.
  *
  * @author Izan Robles
- * @author Arturo Pérez
  * 
  * @param g Pointer to the graph.
  * @param tag Tag of the origin vertex.
@@ -225,7 +213,6 @@ int graph_print (FILE *pf, const Graph *g);
  * @brief Reads a graph definition from a text file.
  *
  * @author Izan Robles
- * @author Arturo Pérez
  * 
  * Reads a graph description from the text file pointed to by fin,
  * and fills the graph g.
@@ -258,11 +245,35 @@ Status graph_readFromFile (FILE *fin, Graph *g);
  * @brief Verifies if all the fields of a graph are valid.
  * 
  * @author Izan Robles
- * @author Arturo Pérez
  *
  * @param g Graph pointer
  *
  * @return  Returns TRUE if the vertex is invalid, FALSE otherwise
  */
 Bool is_invalid_graph (const Graph *g);
-#endif /* GRAPH_H */
+
+/**
+ * @brief Changes the label of all the vertex of the graph
+ * 
+ * @author Izan Robles
+ *
+ * @param g Graph pointer
+ * @param l Label to be set in all vertex
+ *
+ * @return  Returns OK if task was completed, ERROR otherwise. 
+ */
+Status graph_set_all_vertex_label(Graph *g, Label l);
+
+/**
+ * @brief Gets the vertex array from a graph
+ * 
+ * @author Izan Robles
+ *
+ * @param g Graph pointer
+ *
+ * @return  Returns a pointer to the graph vertex
+ */
+Vertex **graph_get_vertex_array(Graph *g);
+
+#endif
+

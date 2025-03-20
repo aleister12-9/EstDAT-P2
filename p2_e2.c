@@ -41,12 +41,11 @@ int main()
 
     fclose(file);
 
-    if (graph_print(stdout, g) <= 0)
+    if (graph_depthSearch(g, 1, 1) == ERROR)
     {
-        printf("Could not print graph\n");
-        graph_free(g);
-        return 1;
+        printf("Could not execute algorithm");
     }
+    
 
     graph_free(g);
 

@@ -17,7 +17,7 @@
 /**
  * @brief Reads data from a document and adds it to new stack
  * 
- * @author Arturo Pérez
+ * @author Izan Robles
  *
  * @param file pointer to the file from which data will be read
  * 
@@ -61,5 +61,20 @@ void stack_free_with_elements(Stack *s);
  *
  **/
 Stack *stack_of_vertex_from_file(FILE *file);
+
+/**
+ * @brief: Makes a search from the origin vertex to the destination vertex of a graph using the depth-first 
+ * search algorithm using an ADT Stack. It prints the path followed. 
+ * 
+ * @author Izan Robles
+ *
+ * @param g, Pointer to graph
+ * @param from_id, id of the origin Vertex
+ * @param to_id, id of the destination Vertex
+ * 
+ * @return The function returns OK or ERROR
+ * 
+**/
+Status graph_depthSearch (Graph *g, long from_id, long to_id);
 
 #endif

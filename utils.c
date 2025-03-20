@@ -208,3 +208,68 @@ Stack *stack_of_vertex_from_file(FILE *file)
 
 /* ------------------------------------------------------------- */
 
+Status graph_depthSearch (Graph *g, long from_id, long to_id)
+{
+    int i, num_vertices;
+    Stack *st = NULL;
+    Vertex **vertex_array = NULL;
+
+    if (is_invalid_graph(g) || from_id < 0 || to_id < 0)
+    {
+        return ERROR;
+    }
+    
+    /*Print input graph*/
+    printf("Input Graph:\n");
+    if (graph_print(stdout, g) <= 0)
+    {
+        printf("Could not print graph");
+    }
+
+    /*Set all vertices to white*/
+    if (graph_set_all_vertex_label(g, WHITE) == ERROR)
+    {
+        printf("Could not perform algorithm (Code 001)");
+    }
+
+    /*Execute algorithm*/
+    if (!(st = stack_init()))
+    {
+        return ERROR;
+    }
+
+    if ((num_vertices = graph_getNumberOfVertices(g)) < 0)
+    {
+        printf("Could not perform algorithm (Code 002)");        
+        stack_free_with_elements(st);
+        return ERROR;
+    }
+    
+    if (!(vertex_array = graph_get_vertex_array(g)))
+    {
+        printf("Could not perform algorithm (Code 003)");        
+        stack_free_with_elements(st);
+        return ERROR;
+    }
+
+    for (i = 0; i < num_vertices; i++)
+    {
+        if (vertex_getId(vertex_array[i]) == from_id)
+        {
+            break;
+        }
+    }
+    
+    
+
+
+
+
+
+
+
+
+    stack_free_with_elements(st);
+    
+    return OK;
+}
