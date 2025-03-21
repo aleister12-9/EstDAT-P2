@@ -8,36 +8,32 @@
 #include "vertex.h"
 #include "graph.h"
 
-#define MAX_FILENAME 128
-
-int main()
+int main(int argc, char *argv[])
 {
     Graph *g = NULL;
     FILE *file = NULL;
-    char filename[MAX_FILENAME];
     long id_from, id_to;
+    char *endptr;
 
-    printf("\n");
+    if (argc != 4)
+    {
+        printf("ERROR: Invalid input data\nUse: \"program <graph_file> <id_from> <id_to>\"\n");
+        return 1;
+    }
 
     g = graph_init();
     if (!g)
     {
-        printf("ERROR: could not initialize graph");
+        printf("ERROR: could not initialize graph\n");
         return 1;
     }
-    
-    printf("\nType the graph datafile -->");
-    scanf("%s", filename);
 
-    if (!(file = fopen(filename, "r")))
+    if (!(file = fopen(argv[1], "r")))
     {
         printf("ERROR: could not open file\n");
+        printf("Use: \"program <graph_file> <id_from> <id_to>\"\n");
         graph_free(g);
         return 1;
-    }
-    else
-    {
-        printf("DEBUG: file found and opened\n");
     }
 
     if (graph_readFromFile(file, g) == ERROR)
@@ -47,70 +43,41 @@ int main()
         fclose(file);
         return 1;
     }
-    else
+
+    fclose(file);
+
+    id_from = strtol(argv[2], &endptr, 10);
+    if (*endptr != '\0' || id_from < 0 || !graph_contains(g, id_from))
     {
-        printf("DEBUG: graph succesfully read\n");
+        printf("ERROR: Invalid vertex \"from\": %s\n", argv[2]);
+        graph_free(g);
+        return 1;
+    }
+
+    id_to = strtol(argv[3], &endptr, 10);
+    if (*endptr != '\0' || id_to < 0 || !graph_contains(g, id_to))
+    {
+        printf("ERROR: Invalid vertex \"to\": %s\n", argv[3]);
+        graph_free(g);
+        return 1;
     }
 
     printf("Input graph: \n");
-
     if (graph_print(stdout, g) <= 0)
     {
         printf("ERROR: Could not print graph\n");
         graph_free(g);
-        fclose(file);
         return 1;
     }
-
-    do 
-    {
-        printf("Type id of vertex to start from -->");
-        if (scanf("%ld", &id_from) != 1) 
-        {
-            printf("ERROR: Invalid input. Please enter a valid numeric ID.\n");
-            while (getchar() != '\n'); 
-            continue;
-        }
-        if (!graph_contains(g, id_from)) 
-        {
-            printf("ERROR: Vertex %ld does not exist in the graph\n", id_from);
-        }
-
-    } while (!graph_contains(g, id_from));
-    
-    do 
-    {
-        printf("Type id of vertex to end -->");
-        if (scanf("%ld", &id_to) != 1) 
-        {
-            printf("ERROR: Invalid input. Please enter a valid numeric ID.\n");
-            while (getchar() != '\n'); 
-            continue;
-        }
-        if (!graph_contains(g, id_to)) 
-        {
-            printf("ERROR: Vertex %ld does not exist in the graph\n", id_to);
-        }
-
-    } while (!graph_contains(g, id_to));
-
-    fclose(file);
 
     printf("Output: ");
-
     if (graph_depthSearch(g, id_from, id_to) == ERROR)
     {
+        printf("ERROR: Could not execute algorithm\n");
         graph_free(g);
-        printf("ERROR: Could not execute algorithm");
         return 1;
     }
-    else
-    {
-        printf("DEBUG: algorithm succesfully executed\n");
-    }
-    
-    graph_free(g);
-    printf("\n");
 
+    graph_free(g);
     return 0;
 }
