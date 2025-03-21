@@ -131,8 +131,6 @@ const char* vertex_getTag (const Vertex * v);
  */
 Label vertex_getState (const Vertex * v);
 
-
-
 /**
  * @brief Modifies the id of a given vertex.
  * 
@@ -271,6 +269,8 @@ Status vertex_set_index(Vertex *v, int index);
 
 /**
  * @brief Gets the index of a given vertex
+ * 
+ * @author Izan Robles
  * 
  * @param v Vertex pointer
  *

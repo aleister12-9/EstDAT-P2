@@ -77,8 +77,8 @@ Vertex *vertex_init()
 		return NULL;
 	}
 
-	v->state = WHITE;
-	v->id = 0;
+	vertex_setState(v, WHITE);
+	vertex_setId(v, 0);
 	v->index = -1;
 
 	if (TAG_LENGTH > 0)
@@ -153,7 +153,7 @@ Status vertex_setId (Vertex * v, const long id)
 /*----------------------------------------------------------------------------------------*/
 Status vertex_setTag (Vertex * v, const char * tag)
 {
-	if (v == NULL || strlen(tag) > TAG_LENGTH)
+	if (v == NULL || strlen(tag) > (TAG_LENGTH-1))
 	{
 		return ERROR;
 	}
@@ -233,7 +233,7 @@ int vertex_cmp (const void * v1, const void * v2)
 void * vertex_copy (const void * src)
 {
 	const Vertex *source;
-	Vertex *v;
+	Vertex *v = NULL;
 	
 	if (src == NULL)
 	{
@@ -247,16 +247,11 @@ void * vertex_copy (const void * src)
 		return NULL;
 	}
 	
-	v = NULL;
+	v = vertex_init();
 
-	if (!(v = (Vertex*)malloc(sizeof(Vertex))))
-	{
-		return NULL;
-	}
-
-	v->id = source->id;
-	strcpy(v->tag, source->tag);
-	v->state = source->state;
+	vertex_setId(v, vertex_getId(source));
+	vertex_setTag(v, vertex_getTag(source));
+	vertex_setState(v, vertex_getState(source));
 
 	return v;
 }
@@ -273,7 +268,7 @@ int vertex_print (FILE * pf, const void * v)
 
 	source = (const Vertex *)v;
 
-	return fprintf(pf, "[%ld, %s, %d]", source->id, source->tag, source->state);
+	return fprintf(pf, "[%ld, %s, %d]", vertex_getId(source), vertex_getTag(source), vertex_getState(source));
 }
 
 /*----------------------------------------------------------------------------------------*/

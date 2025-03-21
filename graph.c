@@ -21,7 +21,7 @@ struct _Graph
 Graph * graph_init()
 {
     Graph *g = NULL;
-    int x, y;
+    int x, y, i;
 
     if (!(g = (Graph *)malloc(sizeof(Graph))))
     {
@@ -38,6 +38,12 @@ Graph * graph_init()
             g->connections[x][y] = FALSE;
         }  
     }
+
+    for (i = 0; i < MAX_VTX; i++)
+    {
+        g->vertices[i] = NULL;
+    }
+    
     
     return g;
 }
@@ -62,7 +68,7 @@ Status graph_newVertex(Graph *g, char *desc)
 {
     Vertex *v;
 
-    if (is_invalid_graph(g) || desc == NULL)
+    if (is_invalid_graph(g) || desc == NULL || g->num_vertices == MAX_VTX)
     {
         return ERROR;
     }
@@ -122,6 +128,11 @@ Status graph_newEdge(Graph *g, long orig, long dest)
         return ERROR;
     }
 
+    if (graph_connectionExists(g, orig_index, dest_index))
+    {
+        return OK;
+    }
+    
     g->connections[orig_index][dest_index] = TRUE;
     g->num_edges++;
 
@@ -378,7 +389,7 @@ Status graph_readFromFile (FILE *fin, Graph *g)
     }
 
     fscanf(fin, "%d\n", &num_vertices);
-    if (num_vertices < 0)
+    if (num_vertices < 1)
     {
         return ERROR;
     }
@@ -447,23 +458,46 @@ Bool is_invalid_graph (const Graph *g)
 /*----------------------------------------------------------------------------------------*/
 Status graph_set_all_vertex_label(Graph *g, Label l)
 {
-    /*Hacer copia de seguridad del grafo por si da error*/
-    
     int i;
-    
+    Label *backup = NULL;
+
+
     if (is_invalid_graph(g) || (l != WHITE && l != BLACK && l != ERROR_VERTEX))
     {
         return ERROR;
+    }
+    
+    /*Create backup in case something fails*/
+    backup = (Label *)malloc(g->num_vertices * sizeof(Label));
+    if (!backup) 
+    {
+         return ERROR;
+    }
+
+    for (i = 0; i < g->num_vertices; i++)
+    {
+        backup[i] = vertex_getState(g->vertices[i]);
+        if (backup[i] == ERROR_VERTEX)
+        {
+            free(backup);
+            return ERROR;
+        }
     }
 
     for (i = 0; i < g->num_vertices; i++)
     {
         if (vertex_setState(g->vertices[i], l) == ERROR)
         {
+            for (; i >= 0; i--)
+            {
+                vertex_setState(g->vertices[i], backup[i]);
+            }
+            free(backup);
             return ERROR;
         }
     }
     
+    free(backup);
     return OK;
 }
 
