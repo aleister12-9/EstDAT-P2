@@ -51,7 +51,7 @@ clean:
 
 run_e1a:
 	@echo ">>>>>>Running p2_e1a"
-	./p2_e1a
+	./p2_e1a grades1.txt grades2.txt
 
 run_e1b:
 	@echo ">>>>>>Running p2_e1b"
@@ -63,7 +63,7 @@ run_e2:
 
 runv_e1a:
 	@echo ">>>>>>Running p2_e1a with valgrind"
-	valgrind --leak-check=full ./p2_e1a
+	valgrind --leak-check=full ./p2_e1a grades1.txt grades2.txt
 
 runv_e1b:
 	@echo ">>>>>>Running p2_e1b with valgrind"

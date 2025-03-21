@@ -10,6 +10,8 @@
 
 int main(int argc, char *argv[])
 {
+    /* -------------------------------------------- Error control and varaible creation -------------------------------------------- */
+
     Graph *g = NULL;
     FILE *file = NULL;
     long id_from, id_to;
@@ -20,6 +22,8 @@ int main(int argc, char *argv[])
         printf("ERROR: Invalid input data\nUse: \"program <graph_file> <id_from> <id_to>\"\n");
         return 1;
     }
+
+    /* -------------------------------------------- Init and start graph -------------------------------------------- */
 
     g = graph_init();
     if (!g)
@@ -46,6 +50,9 @@ int main(int argc, char *argv[])
 
     fclose(file);
 
+    /* -------------------------------------------- Check input ids -------------------------------------------- */
+
+
     id_from = strtol(argv[2], &endptr, 10);
     if (*endptr != '\0' || id_from < 0 || !graph_contains(g, id_from))
     {
@@ -61,6 +68,8 @@ int main(int argc, char *argv[])
         graph_free(g);
         return 1;
     }
+
+    /* -------------------------------------------- Print graph and execute algorithm -------------------------------------------- */
 
     printf("Input graph: \n");
     if (graph_print(stdout, g) <= 0)

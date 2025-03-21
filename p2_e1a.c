@@ -6,7 +6,7 @@
 #include "utils.h"
 #include "file_utils.h"
 
-int main(void)
+int main(int argc, char *argv[])
 {
     FILE *file = NULL;
     int error_manager = 0;
@@ -15,8 +15,15 @@ int main(void)
     Stack *sout = NULL;
     P_stack_ele_print print_func = _float_print;
 
+    if (argc != 3)
+    {
+        printf("Use: program <data_file_1.txt> <data_file_2.tx>\n");
+        return 1;
+    }
+    
+
     /*Read first file and create stack*/
-    if (!(file = fopen("grades1.txt", "r")))
+    if (!(file = fopen(argv[1], "r")))
     {
         printf("Could not open first file\n");
         return 1;
@@ -25,7 +32,7 @@ int main(void)
     sin1 = stack_read_from_file(file);
     if (!sin1)
     {
-        printf("Could not read information (grades1)\n");
+        printf("Could not read information\n");
         fclose(file);
         return 1;
     }
@@ -42,7 +49,7 @@ int main(void)
     }
 
     /*Read second file and create stack*/
-    if (!(file = fopen("grades2.txt", "r")))
+    if (!(file = fopen(argv[2], "r")))
     {
         printf("Could not open second file\n");
         stack_free_with_elements(sin1);
@@ -52,7 +59,7 @@ int main(void)
     sin2 = stack_read_from_file(file);
     if (!sin2)
     {
-        printf("Could not read information (grades2)\n");
+        printf("Could not read information\n");
         fclose(file);
         stack_free_with_elements(sin1);
         return 1;
