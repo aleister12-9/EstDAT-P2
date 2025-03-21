@@ -110,6 +110,8 @@ int main(int argc, char *argv[])
     stack_free_with_elements(sin1);
     stack_free_with_elements(sin2);
     stack_free_with_elements(sout);
+    printf("\n");
+
 
     return 0;
 }

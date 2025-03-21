@@ -1,15 +1,9 @@
 /**
- * @file graph.h
- * 
- * @author Profesores Prog2
- * @author Izan Robles
- * 
- * @date Created on February 07, 2021
- * @version 1.0
- * @brief Library to manage the Graph ADT
- *
- * @see
+ * @file  graph.h
+ * @author Teachers at EPS
+ * @brief Graph library
  */
+
 
 #ifndef GRAPH_H
 #define GRAPH_H

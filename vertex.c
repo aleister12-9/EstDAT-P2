@@ -1,3 +1,9 @@
+/**
+ * @file  vertex.c
+ * @author Izan Robles
+ * @brief Module for vertex implementation
+ */
+
 #include "vertex.h"
 #include <string.h>
 

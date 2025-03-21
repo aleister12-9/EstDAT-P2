@@ -1,3 +1,9 @@
+/**
+ * @file  file_utils.h
+ * @author Teachers at EPS
+ * @brief Utils for different datatypes
+ */
+
 #ifndef _FILE_UTILS_H
 #define _FILE_UTILS_H
 

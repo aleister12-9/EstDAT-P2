@@ -70,7 +70,7 @@ int main(int argc, char *argv[])
         return 1;
     }
 
-    printf("Output: ");
+    printf("Output: \n");
     if (graph_depthSearch(g, id_from, id_to) == ERROR)
     {
         printf("ERROR: Could not execute algorithm\n");

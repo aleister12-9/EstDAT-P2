@@ -1,17 +1,8 @@
 /**
  * @file  vertex.h
- * 
- * @author Profesores Programación 2
  * @author Izan Robles
- * @author Arturo Pérez
- * 
- * @date 20 feb 2025
- * @version 1.5
- * @brief Library to manage ADT Vertex
- *
- * @details 
- * 
- * @see
+ * @author Arturo Perez
+ * @brief Module for vertex implementation
  */
 
 
@@ -23,6 +14,7 @@
 #include <stdlib.h>
 #include <math.h>
 #include <string.h>
+
 #define TAG_LENGTH 64
 #define MAX_DATA 128
 

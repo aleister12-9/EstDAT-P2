@@ -1,3 +1,10 @@
+/**
+ * @file  graph.c
+ * @author Izan Robles
+ * @brief Graph library
+ */
+
+
 #include "graph.h"
 
 #define MAX_VTX 4096

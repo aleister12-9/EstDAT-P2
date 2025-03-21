@@ -1,26 +1,20 @@
 /**
  * @file  stack.h
- * @author EDAT
- * @date 24 Feb 2025
- * @version 1.0
+ * @author Izan Robles
+ * @author Teachers at EPS
  * @brief Stack library
- *
- * @details Stack interface
- *
- * @see http://www.stack.nl/~dimitri/doxygen/docblocks.html
- * @see http://www.stack.nl/~dimitri/doxygen/commands.html
  */
-
 
 #ifndef STACK_H
 #define STACK_H
 
 #include "types.h"
 #include <stdio.h>
-
+#include <stdlib.h>
 
 /**
- * @brief Structure to implement a stack. To be defined in stack_fp.c
+ * @brief Structure to implement a stack.
+ * @author Izan Robles
  *
  **/
 typedef struct _Stack Stack;
@@ -37,20 +31,24 @@ typedef int (*P_stack_ele_cmp)(const void *, const void *);
 
 /**
  * @brief This function initializes an empty stack.
+ * @author Izan Robles
  *
- * @return   This function returns a pointer to the stack or a null pointer
+ * @return This function returns a pointer to the stack or a null pointer
  * if insufficient memory is available to create the stack.
  *  */
 Stack * stack_init (void);
 
 /**
  * @brief  This function frees the memory used by the stack.
+ * @author Izan Robles
+ * 
  * @param s A pointer to the stack
  *  */
 void stack_free (Stack *s);
 
 /**
  * @brief This function is used to insert a element at the top of the stack.
+ * @author Izan Robles
  *
  * A reference of the element is added to the stack container and the size of the stack is increased by 1.
  * Time complexity: O(1). This function reallocate the stack capacity when it is full.
@@ -62,6 +60,7 @@ Status stack_push (Stack *s, const void *ele);
 
 /**
  * @brief  This function is used to extract a element from the top of the stack.
+ * @author Izan Robles
  *
  * The size of the stack is decreased by 1. Time complexity: O(1).
  * @param s A pointer to the stack.
@@ -72,6 +71,7 @@ void * stack_pop (Stack *s);
 
 /**
  * @brief  This function is used to reference the top (or the newest) element of the stack.
+ * @author Izan Robles
  *
  * @param s A pointer to the stack.
  * @return This function returns a pointer to the newest element of the stack.
@@ -80,6 +80,8 @@ void * stack_top (const Stack *s);
 
 /**
  * @brief Returns whether the stack is empty
+ * @author Izan Robles
+ * 
  * @param s A pointer to the stack.
  * @return TRUE or FALSE
  */
@@ -87,6 +89,7 @@ Bool stack_isEmpty (const Stack *s);
 
 /**
  * @brief This function returns the size of the stack.
+ * @author Izan Robles
  *
  * Time complexity: O(1).
  * @param s A pointer to the stack.
@@ -96,6 +99,8 @@ size_t stack_size (const Stack *s);
 
 /**
  * @brief  This function writes the elements of the stack to the stream.
+ * @author Izan Robles
+ * 
  * @param fp A pointer to the stream
  * @param s A pointer to the element to the stack
  * @return Upon successful return, these function returns the number of characters writted.
@@ -103,5 +108,5 @@ size_t stack_size (const Stack *s);
  *  */
 int stack_print(FILE* fp, const Stack *s,  P_stack_ele_print f);
 
-#endif	/* STACK_H */
+#endif	
 

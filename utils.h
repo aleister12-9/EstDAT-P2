@@ -1,7 +1,7 @@
-/* 
- * File: utils.h
- * Author: Arturo Pérez
- * Author: Izan Robles
+/**
+ * @file  utils.h
+ * @author Izan Robles
+ * @brief Toolset for using different datatypes
  */
 
 #ifndef UTILS_H
