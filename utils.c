@@ -1,4 +1,4 @@
-/* 
+/*
  * File: utils.c
  * Author: Arturo Pérez
  * Author: Izan Robles
@@ -11,11 +11,11 @@
 Stack *stack_read_from_file(FILE *file)
 {
     int i;
-    int n_elements = 0; 
+    int n_elements = 0;
     Stack *p_new_stack;
     float temp;
     float *p_value;
-    
+
     /*Argument control*/
     if (!file)
     {
@@ -41,7 +41,7 @@ Stack *stack_read_from_file(FILE *file)
         stack_free_with_elements(p_new_stack);
         return NULL;
     }
-    
+
     /*Add new elements to the stack*/
     for (i = 0; i < n_elements; i++)
     {
@@ -72,11 +72,11 @@ Stack *stack_read_from_file(FILE *file)
 
 /* ------------------------------------------------------------- */
 
-Status mergeStacks (Stack *sin1, Stack *sin2, Stack *sout, P_stack_ele_cmp cmp_func)
+Status mergeStacks(Stack *sin1, Stack *sin2, Stack *sout, P_stack_ele_cmp cmp_func)
 {
     void *temp = NULL;
     float *val1, *val2;
-    
+
     if (!sin1 || !sin2 || !sout || !cmp_func)
     {
         return ERROR;
@@ -87,7 +87,7 @@ Status mergeStacks (Stack *sin1, Stack *sin2, Stack *sout, P_stack_ele_cmp cmp_f
         val1 = (float *)stack_top(sin1);
         val2 = (float *)stack_top(sin2);
 
-        if (cmp_func((const void*)val1, (const void*)val2) >= 0)
+        if (cmp_func((const void *)val1, (const void *)val2) >= 0)
         {
             temp = stack_pop(sin1);
             if (stack_push(sout, temp) == ERROR)
@@ -113,7 +113,7 @@ Status mergeStacks (Stack *sin1, Stack *sin2, Stack *sout, P_stack_ele_cmp cmp_f
             return ERROR;
         }
     }
-    
+
     while (!stack_isEmpty(sin1))
     {
         temp = stack_pop(sin1);
@@ -122,7 +122,7 @@ Status mergeStacks (Stack *sin1, Stack *sin2, Stack *sout, P_stack_ele_cmp cmp_f
             return ERROR;
         }
     }
-    
+
     return OK;
 }
 
@@ -187,7 +187,7 @@ Stack *stack_of_vertex_from_file(FILE *file)
         }
 
         temp[strcspn(temp, "\n")] = 0;
-        
+
         temp_vertex = vertex_initFromString(temp);
         if (!temp_vertex)
         {
@@ -208,22 +208,19 @@ Stack *stack_of_vertex_from_file(FILE *file)
 
 /* ------------------------------------------------------------- */
 
-Status graph_depthSearch (Graph *g, long from_id, long to_id)
+Status graph_depthSearch(Graph *g, long from_id, long to_id)
 {
-    int i, num_vertices;
+    int i, j, num_vertices;
     Stack *st = NULL;
     Vertex **vertex_array = NULL;
+    Vertex *current = NULL;
+    Vertex *neighbor = NULL;
+    long *connections = NULL;
+    int n_connections = 0;
 
     if (is_invalid_graph(g) || from_id < 0 || to_id < 0)
     {
         return ERROR;
-    }
-    
-    /*Print input graph*/
-    printf("Input Graph:\n");
-    if (graph_print(stdout, g) <= 0)
-    {
-        printf("Could not print graph");
     }
 
     /*Set all vertices to white*/
@@ -240,36 +237,92 @@ Status graph_depthSearch (Graph *g, long from_id, long to_id)
 
     if ((num_vertices = graph_getNumberOfVertices(g)) < 0)
     {
-        printf("Could not perform algorithm (Code 002)");        
-        stack_free_with_elements(st);
-        return ERROR;
-    }
-    
-    if (!(vertex_array = graph_get_vertex_array(g)))
-    {
-        printf("Could not perform algorithm (Code 003)");        
-        stack_free_with_elements(st);
+        stack_free(st);
+        printf("Could not perform algorithm (Code 002)");
         return ERROR;
     }
 
-    for (i = 0; i < num_vertices; i++)
+    if (!(vertex_array = graph_get_vertex_array(g)))
     {
-        if (vertex_getId(vertex_array[i]) == from_id)
-        {
+        stack_free(st);
+        printf("Could not perform algorithm (Code 003)");
+        return ERROR;
+    }
+
+    /*Find "from" vertex, paint black and add to stack*/
+    for (i = 0; i < num_vertices; i++) {
+        if (vertex_getId(vertex_array[i]) == from_id) {
+            vertex_setState(vertex_array[i], BLACK);
+            stack_push(st, vertex_array[i]);
             break;
         }
     }
-    
-    
 
+    /*Main loop for algorithm*/
+    printf("From vertex ID: %ld\n", from_id);
+    printf("To vertex id: %ld\n", to_id);
 
+    while (!stack_isEmpty(st))
+    {
+        current = stack_pop(st);
+        vertex_print(stdout, current);
+        printf("\n");
 
+        /* Check if we found target */
+        if (vertex_getId(current) == to_id)
+        {
+            stack_free(st);
+            return OK;
+        }
 
+        /* Get connections for current vertex */
+        n_connections = graph_getNumberOfConnectionsFromId(g, vertex_getId(current));
+        if (n_connections < 0)
+        {
+            stack_free(st);
+            return ERROR;
+        }
 
+        connections = graph_getConnectionsFromId(g, vertex_getId(current));
+        if (!connections && n_connections > 0)
+        {
+            stack_free(st);
+            return ERROR;
+        }
 
+        /* Add unvisited neighbors to stack */
+        for (j = 0; j < n_connections; j++)
+        {
+            /* Find neighbor vertex object from its ID */
+            for (i = 0; i < num_vertices; i++)
+            {
+                if (vertex_getId(vertex_array[i]) == connections[j])
+                {
+                    neighbor = vertex_array[i];
+                    break;
+                }
+            }
 
+            /* If neighbor is unvisited, mark it and add to stack */
+            if (vertex_getState(neighbor) == WHITE)
+            {
+                vertex_setState(neighbor, BLACK);
+                if (stack_push(st, neighbor) == ERROR)
+                {
+                    stack_free(st);
+                    free(connections);
+                    return ERROR;
+                }
+            }
+        }
 
-    stack_free_with_elements(st);
-    
+        if (connections)
+        {
+            free(connections);
+        }
+    }
+
+    stack_free(st);
+
     return OK;
 }

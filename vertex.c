@@ -267,7 +267,7 @@ int vertex_print (FILE * pf, const void * v)
 
 	source = (const Vertex *)v;
 
-	return fprintf(pf, "[%ld, %s, %d, %d]", source->id, source->tag, source->state, source->index);
+	return fprintf(pf, "[%ld, %s, %d]", source->id, source->tag, source->state);
 }
 
 /*----------------------------------------------------------------------------------------*/

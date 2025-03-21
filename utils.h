@@ -66,6 +66,8 @@ Stack *stack_of_vertex_from_file(FILE *file);
  * @brief: Makes a search from the origin vertex to the destination vertex of a graph using the depth-first 
  * search algorithm using an ADT Stack. It prints the path followed. 
  * 
+ * @note This function does not free the graph used
+ * 
  * @author Izan Robles
  *
  * @param g, Pointer to graph
